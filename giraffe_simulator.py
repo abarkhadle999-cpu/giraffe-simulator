@@ -66,7 +66,7 @@ st.title("🦒 Giraffe Evolution Simulator")
 
 st.write("""
 Use this tool to simulate giraffe height evolution using a Genetic Algorithm.  
-Students can experiment with mutation rate, population size, leaf height, etc.
+Students can experiment with mutation rate, population size, number of generations, initial min-and maximum heights, etc.
 """)
 
 # ------------------------
@@ -94,9 +94,9 @@ with col2:
 # IMAGE PLACEHOLDER
 # ------------------------
 st.subheader("Tree Leaf Height Visualization")
-st.image(
-    "https://i.imgur.com/Csx0WWY.png",
-    caption="Example: L_min and L_max (replace with your own image)",
+st. image(
+    "https://imgur.com/gallery/gotcha-no-i-dont-eMAk1#",
+    caption="Geraffe MEME",
 )
 
 # =========================================================
@@ -150,5 +150,6 @@ if st.button("Run Evolution Simulation"):
         else:
             df.to_excel("giraffe_evolution_results.xlsx", index=False)
             st.success("Saved as giraffe_evolution_results.xlsx")
+
 
         st.info("File saved in working directory.")
