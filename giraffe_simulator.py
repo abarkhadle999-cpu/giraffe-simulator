@@ -93,10 +93,11 @@ with col2:
 # ------------------------
 # IMAGE PLACEHOLDER
 # ------------------------
-st.subheader("Tree Leaf Height Visualization")
+st.subheader("MEME")
 st. image(
-    "https://imgur.com/gallery/gotcha-no-i-dont-eMAk1#",
-    caption="Geraffe MEME",
+    "https://tenor.com/oAPZYO0uQao.gif",  # replace with your direct GIF link
+    caption="Giraffe MEME",
+    use_column_width=True
 )
 
 # =========================================================
@@ -153,3 +154,4 @@ if st.button("Run Evolution Simulation"):
 
 
         st.info("File saved in working directory.")
+
