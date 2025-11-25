@@ -97,8 +97,8 @@ col1, col2 = st.columns(2)
 with col1:
     pop_size = st.number_input("Population Size", 2, 500, 20)
     generations = st.number_input("Number of Generations", 1, 500, 30)
-    init_min = st.number_input("Initial Height Minimum (m)", 0.1, 10.0, 3.9)
-    init_max = st.number_input("Initial Height Maximum (m)", 0.1, 10.0, 4.9)
+    init_min = st.number_input("Initial Height Minimum (m)", 0.1, 10.0, 2.9)
+    init_max = st.number_input("Initial Height Maximum (m)", 0.1, 10.0, 3.9)
 
 with col2:
     lmin = st.number_input("L_min (lowest leaf height)", 0.0, 10.0, 3.0)
@@ -106,7 +106,7 @@ with col2:
     
     mutation_rate = st.slider("Mutation Rate", 0.0, 1.0, 0.1)
     mutation_strength = st.slider("Mutation Strength (meters)", 0.0, 2.0, 0.2)
-    crossover_rate = st.slider("Crossover Rate", 0.0, 1.0, 0.8)
+    crossover_rate = st.slider("Crossover Rate", 0.0, 1.0, 0.2)
 
 # ------------------------
 # IMAGE PLACEHOLDER
@@ -172,6 +172,7 @@ if st.button("Run Evolution Simulation"):
 
 
         st.info("File saved in working directory.")
+
 
 
 
