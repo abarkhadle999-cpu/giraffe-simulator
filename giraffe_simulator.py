@@ -9,7 +9,25 @@ import streamlit as st
 import random
 import math
 import pandas as pd
-
+# Custom CSS for green button
+st.markdown("""
+    <style>
+    div.stButton > button:first-child {
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 8px;
+        height: 3em;
+        width: 12em;
+        font-size: 18px;
+        border: none;
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #45a049;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # =========================================================
 # FITNESS FUNCTION
@@ -154,6 +172,7 @@ if st.button("Run Evolution Simulation"):
 
 
         st.info("File saved in working directory.")
+
 
 
 
