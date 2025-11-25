@@ -95,11 +95,10 @@ with col2:
 # ------------------------
 st.subheader("MEME")
 st.image(
-    "short neck giraffe meme",
+    "https://raw.githubusercontent.com/abarkhadle999-cpu/giraffe-simulator/main/short%20neck%20giraffe%20meme.gif",
     caption="Giraffe MEME",
     use_column_width=True
 )
-
 
 # =========================================================
 # RUN SIMULATION
@@ -155,6 +154,7 @@ if st.button("Run Evolution Simulation"):
 
 
         st.info("File saved in working directory.")
+
 
 
 
