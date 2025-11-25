@@ -95,7 +95,7 @@ with col2:
 # ------------------------
 st.subheader("MEME")
 st.image("giraffe_meme.gif", caption="Giraffe MEME", use_column_width=True)
-)
+
 
 # =========================================================
 # RUN SIMULATION
@@ -151,6 +151,7 @@ if st.button("Run Evolution Simulation"):
 
 
         st.info("File saved in working directory.")
+
 
 
 
