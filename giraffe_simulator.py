@@ -94,7 +94,11 @@ with col2:
 # IMAGE PLACEHOLDER
 # ------------------------
 st.subheader("MEME")
-st.image("giraffe_meme.gif", caption="Giraffe MEME", use_column_width=True)
+st. image(
+    "giraffe_meme.gif",
+    caption="Giraffe MEME",
+    use_column_width=True
+)
 
 
 # =========================================================
@@ -151,6 +155,7 @@ if st.button("Run Evolution Simulation"):
 
 
         st.info("File saved in working directory.")
+
 
 
 
