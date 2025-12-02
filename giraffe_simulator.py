@@ -151,46 +151,31 @@ if st.button("Run Evolution Simulation"):
     st.success("Simulation Completed!")
     st.line_chart(df.set_index("Generation")["Best Height (m)"])
 
-    st.subheader("Best Height per Generation")
+  st.subheader("Best Height per Generation")
 st.dataframe(df)
 
 # -----------------------------
 # SAVE RESULTS BUTTON
 # -----------------------------
-st.subheader("Save Results")
+st.subheader("Save Results (Excel)")
 
-# Sortera data så den inte blandas ihop
-df_sorted = df.sort_values(by="Generation")
+# Sortera dataframe
+df_sorted = df.sort_values("Generation")
 
-# Skapa en Excel-fil i minnet
+# Skapa Excel-fil i minnet
 import io
-from openpyxl import Workbook
 
-output = io.BytesIO()
-wb = Workbook()
-ws = wb.active
-ws.title = "Giraffe Evolution"
+buffer = io.BytesIO()
+df_sorted.to_excel(buffer, index=False, sheet_name="Giraffe Evolution")
+buffer.seek(0)
 
-# Skriv kolumnnamn
-ws.append(list(df_sorted.columns))
-
-# Skriv rader
-for row in df_sorted.itertuples(index=False):
-    ws.append(list(row))
-
-# Spara i bytes-buffer
-wb.save(output)
-excel_data = output.getvalue()
-
-# Ladda ner-knapp
+# Nedladdningsknapp
 st.download_button(
     label="Download Excel File",
-    data=excel_data,
+    data=buffer,
     file_name="giraffe_evolution_results.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 )
-
-
 
 
 
