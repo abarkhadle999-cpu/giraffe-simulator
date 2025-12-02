@@ -181,6 +181,7 @@ if 'df' in locals():
     )
 
 else:
-    st.warning("Dataframe df finns inte än. Kör först simuleringen för att generera data.")
+    st.warning("Dataf finns inte än. Kör först simuleringen för att generera data.")
+
 
 
