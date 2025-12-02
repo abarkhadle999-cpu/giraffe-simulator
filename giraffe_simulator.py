@@ -105,7 +105,7 @@ with col2:
     lmax = st.number_input("L_max (highest leaf height)", 0.0, 15.0, 8.0)
     
     mutation_rate = st.slider("Mutation Rate", 0.0, 1.0, 0.1)
-    mutation_strength = st.slider("Mutation Strength (meters)", 0.0, 2.0, 0.2)
+    mutation_strength = st.slider("Mutation Strength (meters)", 0.0, 2.0, 0.12)
     crossover_rate = st.slider("Crossover Rate", 0.0, 1.0, 0.2)
 
 # ------------------------
@@ -182,6 +182,7 @@ if 'df' in locals():
 
 else:
     st.warning("Dataf finns inte än. Kör först simuleringen för att generera data.")
+
 
 
 
