@@ -151,28 +151,36 @@ if st.button("Run Evolution Simulation"):
     st.success("Simulation Completed!")
     st.line_chart(df.set_index("Generation")["Best Height (m)"])
 
+# =========================================================
+# Visa resultat
+# =========================================================
 st.subheader("Best Height per Generation")
-st.dataframe(df)
 
-# -----------------------------
-# SAVE RESULTS BUTTON
-# -----------------------------
-st.subheader("Save Results (CSV)")
+# Kontrollera att df finns
+if 'df' in locals():
+    # Visa dataframe i appen
+    st.dataframe(df)
 
-# Sortera dataframe
-df_sorted = df.sort_values("Generation")
+    # -----------------------------
+    # SAVE RESULTS BUTTON (CSV)
+    # -----------------------------
+    st.subheader("Save Results (CSV)")
 
-# Skapa CSV i minnet
-csv_data = df_sorted.to_csv(index=False).encode("utf-8")
+    # Sortera dataframe efter Generation
+    df_sorted = df.sort_values("Generation")
 
-# Nedladdningsknapp
-st.download_button(
-    label="Download CSV File",
-    data=csv_data,
-    file_name="giraffe_evolution_results.csv",
-    mime="text/csv"
-)
+    # Skapa CSV i minnet
+    csv_data = df_sorted.to_csv(index=False).encode("utf-8")
 
+    # Nedladdningsknapp
+    st.download_button(
+        label="Download CSV File",
+        data=csv_data,
+        file_name="giraffe_evolution_results.csv",
+        mime="text/csv"
+    )
 
+else:
+    st.warning("Dataframe df finns inte än. Kör först simuleringen för att generera data.")
 
 
