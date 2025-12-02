@@ -151,7 +151,7 @@ if st.button("Run Evolution Simulation"):
     st.success("Simulation Completed!")
     st.line_chart(df.set_index("Generation")["Best Height (m)"])
 
-  st.subheader("Best Height per Generation")
+st.subheader("Best Height per Generation")
 st.dataframe(df)
 
 # -----------------------------
@@ -176,6 +176,7 @@ st.download_button(
     file_name="giraffe_evolution_results.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 )
+
 
 
 
