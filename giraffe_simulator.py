@@ -166,11 +166,12 @@ if st.button("Run Evolution Simulation"):
             df.to_excel("giraffe_evolution_results.xlsx", index=False)
             st.success("Saved as giraffe_evolution_results.xlsx")
 
-        else:
+        
             
 
 
         st.info("File saved in working directory.")
+
 
 
 
