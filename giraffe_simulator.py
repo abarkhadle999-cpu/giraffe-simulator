@@ -159,19 +159,19 @@ if st.button("Run Evolution Simulation"):
     # -----------------------------
     st.subheader("Save Results")
 
-    file_format = st.selectbox("Select format", ["CSV", "Excel"])
+    file_format = st.selectbox("Select format", [ "Excel"])
 
     if st.button("Download results"):
-        if file_format == "CSV":
-            df.to_csv("giraffe_evolution_results.csv", index=False)
-            st.success("Saved as giraffe_evolution_results.csv")
-
-        else:
+        if file_format == "xlsx":
             df.to_excel("giraffe_evolution_results.xlsx", index=False)
             st.success("Saved as giraffe_evolution_results.xlsx")
 
+        else:
+            
+
 
         st.info("File saved in working directory.")
+
 
 
 
