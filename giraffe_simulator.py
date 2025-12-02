@@ -7,8 +7,8 @@ Created on Tue Nov 25 10:00:47 2025
 
 import streamlit as st
 import random
-import math
 import pandas as pd
+
 # Custom CSS for green button
 st.markdown("""
     <style>
@@ -30,16 +30,16 @@ st.markdown("""
 )
 
 # =========================================================
-# FITNESS FUNCTION
+# FITNESS FUNCTION (målhöjd = 5.5 m)
 # =========================================================
-def fitness(height, Lmin, Lmax):
-    if height < Lmin:
-        return 0.0
-    if height <= Lmax:
-        return (height - Lmin) / (Lmax - Lmin)
-    penalty = 0.1 * (height - Lmax)
-    return max(0.0, 1.0 - penalty)
-
+def fitness(height, target=5.5):
+    """
+    Fitness baseras på hur nära giraffen är målhöjden (5.5 m).
+    Max fitness = 1.0 när höjd = target.
+    """
+    diff = abs(height - target)
+    fitness_value = max(0.0, 1.0 - (diff / target))  # Normaliserad fitness
+    return fitness_value
 
 # =========================================================
 # GA COMPONENTS
@@ -47,9 +47,8 @@ def fitness(height, Lmin, Lmax):
 def initialize_population(size, hmin, hmax):
     return [random.uniform(hmin, hmax) for _ in range(size)]
 
-
-def select_parent(population, Lmin, Lmax):
-    fits = [fitness(h, Lmin, Lmax) for h in population]
+def select_parent(population):
+    fits = [fitness(h) for h in population]
     total_fit = sum(fits)
     if total_fit == 0:
         return random.choice(population)
@@ -61,7 +60,6 @@ def select_parent(population, Lmin, Lmax):
         if c >= r:
             return indiv
 
-
 def crossover(p1, p2, rate):
     if random.random() > rate:
         return p1, p2
@@ -70,28 +68,24 @@ def crossover(p1, p2, rate):
     c2 = a * p2 + (1 - a) * p1
     return c1, c2
 
-
 def mutate(value, rate, strength):
     if random.random() < rate:
         value += random.uniform(-strength, strength)
     return value
 
-
 # =========================================================
 # STREAMLIT UI
 # =========================================================
 st.title("🦒 Giraffe Evolution Simulator")
-
 st.write("""
 Use this tool to simulate giraffe height evolution using a Genetic Algorithm.  
-Students can experiment with mutation rate, population size, number of generations, initial min-and maximum heights, etc.
+Simulatorn strävar efter en optimal giraffhöjd på 5,5 meter.
 """)
 
 # ------------------------
 # INPUT PANEL
 # ------------------------
 st.header("Simulation Settings")
-
 col1, col2 = st.columns(2)
 
 with col1:
@@ -101,9 +95,6 @@ with col1:
     init_max = st.number_input("Initial Height Maximum (m)", 0.1, 10.0, 3.9)
 
 with col2:
-    lmin = st.number_input("L_min (lowest leaf height)", 0.0, 10.0, 3.0)
-    lmax = st.number_input("L_max (highest leaf height)", 0.0, 15.0, 8.0)
-    
     mutation_rate = st.slider("Mutation Rate", 0.0, 1.0, 0.1)
     mutation_strength = st.slider("Mutation Strength (meters)", 0.0, 2.0, 0.12)
     crossover_rate = st.slider("Crossover Rate", 0.0, 1.0, 0.2)
@@ -121,7 +112,6 @@ st.image(
 # =========================================================
 # RUN SIMULATION
 # =========================================================
-
 if st.button("Run Evolution Simulation"):
     population = initialize_population(pop_size, init_min, init_max)
     best_list = []
@@ -130,8 +120,8 @@ if st.button("Run Evolution Simulation"):
         new_pop = []
 
         while len(new_pop) < pop_size:
-            p1 = select_parent(population, lmin, lmax)
-            p2 = select_parent(population, lmin, lmax)
+            p1 = select_parent(population)
+            p2 = select_parent(population)
 
             c1, c2 = crossover(p1, p2, crossover_rate)
             c1 = mutate(c1, mutation_rate, mutation_strength)
@@ -141,8 +131,8 @@ if st.button("Run Evolution Simulation"):
 
         population = new_pop[:pop_size]
 
-        best = max(population, key=lambda h: fitness(h, lmin, lmax))
-        best_fit = fitness(best, lmin, lmax)
+        best = max(population, key=lambda h: fitness(h))
+        best_fit = fitness(best)
 
         best_list.append([gen+1, best, best_fit])
 
@@ -152,13 +142,11 @@ if st.button("Run Evolution Simulation"):
     st.line_chart(df.set_index("Generation")["Best Height (m)"])
 
 # =========================================================
-# Visa resultat
+# Visa resultat och spara CSV
 # =========================================================
 st.subheader("Best Height per Generation")
 
-# Kontrollera att df finns
 if 'df' in locals():
-    # Visa dataframe i appen
     st.dataframe(df)
 
     # -----------------------------
@@ -170,6 +158,7 @@ if 'df' in locals():
     df_sorted = df.sort_values("Generation")
 
     # Skapa CSV i minnet
+    import io
     csv_data = df_sorted.to_csv(index=False).encode("utf-8")
 
     # Nedladdningsknapp
@@ -181,7 +170,7 @@ if 'df' in locals():
     )
 
 else:
-    st.warning("Dataf finns inte än. Kör först simuleringen för att generera data.")
+    st.warning("Data finns inte än. Kör först simuleringen för att generera data.")
 
 
 
