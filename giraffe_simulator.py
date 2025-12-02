@@ -157,24 +157,20 @@ st.dataframe(df)
 # -----------------------------
 # SAVE RESULTS BUTTON
 # -----------------------------
-st.subheader("Save Results (Excel)")
+st.subheader("Save Results (CSV)")
 
 # Sortera dataframe
 df_sorted = df.sort_values("Generation")
 
-# Skapa Excel-fil i minnet
-import io
-
-buffer = io.BytesIO()
-df_sorted.to_excel(buffer, index=False, sheet_name="Giraffe Evolution")
-buffer.seek(0)
+# Skapa CSV i minnet
+csv_data = df_sorted.to_csv(index=False).encode("utf-8")
 
 # Nedladdningsknapp
 st.download_button(
-    label="Download Excel File",
-    data=buffer,
-    file_name="giraffe_evolution_results.xlsx",
-    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    label="Download CSV File",
+    data=csv_data,
+    file_name="giraffe_evolution_results.csv",
+    mime="text/csv"
 )
 
 
