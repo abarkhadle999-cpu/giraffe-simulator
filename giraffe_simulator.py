@@ -152,32 +152,43 @@ if st.button("Run Evolution Simulation"):
     st.line_chart(df.set_index("Generation")["Best Height (m)"])
 
     st.subheader("Best Height per Generation")
-    st.dataframe(df)
+st.dataframe(df)
 
-    # -----------------------------
-    # SAVE RESULTS BUTTON
-    # -----------------------------
-    st.subheader("Save Results")
+# -----------------------------
+# SAVE RESULTS BUTTON
+# -----------------------------
+st.subheader("Save Results")
 
-    file_format = st.selectbox("Select format", [ "Excel"])
+# Sortera data så den inte blandas ihop
+df_sorted = df.sort_values(by="Generation")
 
-    if st.button("Download results"):
-        if file_format == "xlsx":
-            df.to_excel("giraffe_evolution_results.xlsx", index=False)
-            st.success("Saved as giraffe_evolution_results.xlsx")
+# Skapa en Excel-fil i minnet
+import io
+from openpyxl import Workbook
 
-        
-            
+output = io.BytesIO()
+wb = Workbook()
+ws = wb.active
+ws.title = "Giraffe Evolution"
 
+# Skriv kolumnnamn
+ws.append(list(df_sorted.columns))
 
-        st.info("File saved in working directory.")
+# Skriv rader
+for row in df_sorted.itertuples(index=False):
+    ws.append(list(row))
 
+# Spara i bytes-buffer
+wb.save(output)
+excel_data = output.getvalue()
 
-
-
-
-
-
+# Ladda ner-knapp
+st.download_button(
+    label="Download Excel File",
+    data=excel_data,
+    file_name="giraffe_evolution_results.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
 
 
 
